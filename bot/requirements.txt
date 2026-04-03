@@ -1,0 +1,19 @@
+# ============================================================
+# BOT SERVICE - Python Dependencies
+# ============================================================
+# Telegram Bot Entry Point for Mini App CRM
+# ============================================================
+
+# --- Core Framework ---
+aiogram~=3.26.0               # Telegram Bot Framework (async)
+aiohttp~=3.13.0               # Async HTTP client
+
+# --- Configuration ---
+pydantic~=2.12.0              # Data validation
+pydantic-settings~=2.13.0     # Settings management
+python-dotenv~=1.0.0          # Load .env files
+
+# --- Utilities ---
+aiofiles~=24.1.0              # Async file operations
+
+# ============================================================

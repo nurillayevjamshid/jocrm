@@ -1,0 +1,53 @@
+# ============================================================
+# For.Ever Cosmetics CRM - Python Dependencies
+# ============================================================
+# Install: pip install -r requirements.txt
+# Production: pip install -r requirements.txt --no-dev
+# ============================================================
+
+# --- Core Framework ---
+aiogram~=3.26.0               # Telegram Bot Framework (async)
+aiohttp~=3.13.0               # Async HTTP client (aiogram dependency)
+
+# --- Configuration & Validation ---
+pydantic~=2.12.0              # Data validation using Python type hints
+pydantic-settings~=2.13.0     # Settings management from env vars
+python-dotenv~=1.0.0          # Load .env files
+
+# --- Logging & Monitoring ---
+# structlog~=24.4.0           # Structured logging (future)
+# sentry-sdk~=2.0.0           # Error tracking (future)
+
+# --- Database (Stage 2) ---
+# sqlalchemy[asyncio]~=2.0.0    # ORM with async support
+# alembic~=1.13.0               # Database migrations
+# asyncpg~=0.29.0               # PostgreSQL async driver
+# aioredis~=2.0.1              # Redis async client (alternative)
+
+# --- Web API (Stage 3) ---
+# fastapi~=0.115.0              # Web framework
+# uvicorn[standard]~=0.32.0     # ASGI server
+# python-multipart~=0.0.9       # Form data parsing
+
+# --- Utilities ---
+# aiofiles~=24.1.0              # Async file operations
+# python-dateutil~=2.9.0        # Date/time utilities
+# orjson~=3.10.0                # Fast JSON parsing (optional)
+# tenacity~=9.0.0               # Retry logic
+# apscheduler~=3.10.0           # Job scheduling
+
+# --- Development & Testing (dev only) ---
+# pytest~=8.3.0                 # Testing framework
+# pytest-asyncio~=0.24.0        # Async test support
+# pytest-cov~=6.0.0             # Coverage reporting
+# mypy~=1.13.0                  # Type checking
+# ruff~=0.7.0                   # Linter & formatter
+# pre-commit~=4.0.0             # Git hooks
+# watchfiles~=0.24.0            # File watching for dev
+
+# ============================================================
+# Notes:
+# - Use '~=' for compatible release (e.g., 3.26.0 allows 3.26.x)
+# - Commented packages for future stages
+# - Pin major.minor for stability, allow patch updates
+# ============================================================

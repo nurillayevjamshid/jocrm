@@ -1,0 +1,6 @@
+"""
+Health endpoints initialization
+"""
+from app.api.v1.endpoints.health import router
+
+__all__ = ["router"]
