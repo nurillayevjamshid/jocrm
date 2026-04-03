@@ -2,7 +2,7 @@ import { useTelegram } from './hooks/useTelegram'
 import './App.css'
 
 function App() {
-  const { user, isReady, webApp, close } = useTelegram()
+  const { user, isReady, webApp, close, crmUser, isAuthLoading, authError, refreshAuth } = useTelegram()
 
   if (!isReady) {
     return (
@@ -35,6 +35,34 @@ function App() {
                 {user.username && <p>@{user.username}</p>}
                 {user.is_premium && <span className="premium">⭐ Premium</span>}
               </div>
+            </div>
+
+            {/* CRM Auth Status */}
+            <div className="auth-status" style={{ marginTop: '1rem', padding: '1rem', background: '#f0f0f0', borderRadius: '8px' }}>
+              <h4>🔐 CRM Auth Status</h4>
+              {isAuthLoading && <p style={{ color: '#666' }}>⏳ Backend bilan ulanmoqda...</p>}
+              {authError && <p style={{ color: 'red' }}>❌ Xatolik: {authError}</p>}
+              {crmUser && (
+                <div style={{ color: 'green' }}>
+                  <p>✅ CRM User: {crmUser.first_name} {crmUser.last_name}</p>
+                  <p style={{ fontSize: '0.8rem', color: '#666' }}>
+                    Telegram ID: {crmUser.telegram_id} | CRM ID: {crmUser.id}
+                  </p>
+                  {crmUser.created_at && (
+                    <p style={{ fontSize: '0.8rem', color: '#666' }}>
+                      Created: {new Date(crmUser.created_at).toLocaleString()}
+                    </p>
+                  )}
+                </div>
+              )}
+              {crmUser && (
+                <button 
+                  onClick={refreshAuth} 
+                  style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                >
+                  🔄 Auth ni yangilash
+                </button>
+              )}
             </div>
 
             <div className="features">

@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import get_settings
 from backend.api.health import router as health_router
+from backend.api.auth import router as auth_router
 
 settings = get_settings()
 
@@ -37,6 +38,7 @@ app.add_middleware(
 )
 
 app.include_router(health_router, prefix="/api/health", tags=["health"])
+app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 
 
 @app.get("/")
