@@ -25,7 +25,11 @@ class Settings(BaseSettings):
     BOT_MODE: str = Field(default="polling")
     WEBHOOK_URL: Optional[str] = Field(default=None)
     ADMIN_IDS: Optional[str] = Field(default=None)
+    
+    # MiniApp URL - set to your Netlify URL for production
+    # Example: https://forever-crm-miniapp.netlify.app
     MINIAPP_URL: str = Field(default="http://localhost:5173")
+    
     DEBUG: bool = Field(default=False)
     LOG_LEVEL: str = Field(default="INFO")
 
