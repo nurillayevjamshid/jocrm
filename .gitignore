@@ -67,7 +67,6 @@ htmlcov/
 
 # Node.js / Mini App
 node_modules/
-miniapp/dist/
 miniapp/build/
 .npm
 package-lock.json
