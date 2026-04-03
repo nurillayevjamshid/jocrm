@@ -1,5 +1,5 @@
 """
-Backend Service - Main FastAPI Application.
+Backend API - Simple FastAPI application.
 """
 
 from contextlib import asynccontextmanager
@@ -7,8 +7,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import get_settings
-from app.api.v1.endpoints import health
+from backend.config import get_settings
+from backend.api.health import router as health_router
 
 settings = get_settings()
 
@@ -16,25 +16,18 @@ settings = get_settings()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
-    # Startup
-    print(f"🚀 Starting backend server on {settings.API_HOST}:{settings.API_PORT}")
-    print(f"📊 Database: {settings.DB_NAME}")
+    print(f"🚀 Backend starting on {settings.API_HOST}:{settings.API_PORT}")
     yield
-    # Shutdown
-    print("🛑 Shutting down backend server")
+    print("🛑 Backend shutting down")
 
 
-# Create FastAPI app
 app = FastAPI(
     title="For.Ever Cosmetics CRM API",
-    description="Backend API for Telegram Mini App CRM",
     version="0.1.0",
     lifespan=lifespan,
     docs_url="/docs" if settings.ENABLE_SWAGGER else None,
-    redoc_url="/redoc" if settings.ENABLE_SWAGGER else None,
 )
 
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
@@ -43,8 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(health.router, prefix="/api/v1/health", tags=["health"])
+app.include_router(health_router, prefix="/api/health", tags=["health"])
 
 
 @app.get("/")

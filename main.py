@@ -1,97 +1,58 @@
 """
-Main application entry point.
+Main Entry Point - For.Ever Cosmetics CRM
 
-Initializes and runs the Telegram bot with polling.
-Handles graceful shutdown on exit signals.
+Usage:
+    python main.py           # Run bot (default)
+    python main.py --api     # Run backend API
 """
 
+import argparse
 import asyncio
 import logging
-import signal
 import sys
 
-from app.core import bot, dp
-from app.handlers import setup_handlers
+from bot.main import main as bot_main
+from backend.main import app as api_app
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
+    handlers=[logging.StreamHandler(sys.stdout)]
 )
-
 logger = logging.getLogger(__name__)
 
 
-async def on_startup() -> None:
-    """
-    Actions to perform on bot startup.
-    
-    - Register all handlers
-    - Log startup information
-    - Initialize any required services
-    """
-    logger.info("Starting bot...")
-    
-    # Setup handlers
-    setup_handlers()
-    logger.info("Handlers registered successfully")
-    
-    # Log bot info
-    bot_info = await bot.get_me()
-    logger.info(f"Bot started: @{bot_info.username} (ID: {bot_info.id})")
-
-
-async def on_shutdown() -> None:
-    """
-    Actions to perform on bot shutdown.
-    
-    - Close bot session
-    - Cleanup resources
-    - Log shutdown
-    """
-    logger.info("Shutting down bot...")
-    
-    # Close bot session
-    await bot.session.close()
-    logger.info("Bot session closed")
-    
-    logger.info("Bot stopped successfully")
-
-
-async def main() -> None:
-    """
-    Main function to run the bot.
-    
-    Uses polling mode for development. For production with webhook,
-    this would be replaced with webhook configuration.
-    """
-    # Run startup sequence
-    await on_startup()
-    
+def run_bot():
+    """Run Telegram bot."""
     try:
-        # Start polling
-        # drop_pending_updates=True - skip updates that arrived while bot was offline
-        # on_shutdown - cleanup function called on exit
-        logger.info("Starting polling...")
-        await dp.start_polling(
-            bot,
-            skip_updates=True,
-            on_shutdown=on_shutdown
-        )
+        asyncio.run(bot_main())
+    except KeyboardInterrupt:
+        logger.info("Stopped by user")
     except Exception as e:
-        logger.error(f"Error during polling: {e}")
-        raise
+        logger.error(f"Error: {e}")
+        sys.exit(1)
+
+
+def run_api():
+    """Run FastAPI backend."""
+    import uvicorn
+    from backend.config import get_settings
+    settings = get_settings()
+    uvicorn.run(
+        "backend.main:app",
+        host=settings.API_HOST,
+        port=settings.API_PORT,
+        reload=settings.DEBUG,
+        log_level=settings.LOG_LEVEL.lower()
+    )
 
 
 if __name__ == "__main__":
-    try:
-        # Run the main async function
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        logger.info("Bot stopped by user (KeyboardInterrupt)")
-    except Exception as e:
-        logger.error(f"Fatal error: {e}")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="For.Ever Cosmetics CRM")
+    parser.add_argument("--api", action="store_true", help="Run backend API instead of bot")
+    args = parser.parse_args()
+
+    if args.api:
+        run_api()
+    else:
+        run_bot()
