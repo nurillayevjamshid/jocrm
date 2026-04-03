@@ -58,7 +58,7 @@ interface TelegramUser {
 }
 
 interface UseTelegramReturn {
-  webApp: Window['Telegram']['WebApp'] | null
+  webApp: any | null
   user: TelegramUser | null
   isReady: boolean
   ready: () => void
@@ -67,7 +67,7 @@ interface UseTelegramReturn {
 }
 
 export function useTelegram(): UseTelegramReturn {
-  const [webApp, setWebApp] = useState<Window['Telegram']['WebApp'] | null>(null)
+  const [webApp, setWebApp] = useState<any | null>(null)
   const [user, setUser] = useState<TelegramUser | null>(null)
   const [isReady, setIsReady] = useState(false)
 

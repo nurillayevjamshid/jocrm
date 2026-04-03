@@ -10,9 +10,9 @@
     "lint": "eslint . --ext ts,tsx"
   },
   "dependencies": {
+    "@vkruglikov/react-telegram-web-app": "^2.1.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@vkruglikov/react-telegram-web-app": "^2.1.6"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
