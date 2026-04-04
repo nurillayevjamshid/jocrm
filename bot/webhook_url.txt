@@ -1,0 +1,2 @@
+# Webhook URL for bot
+WEBHOOK_URL=https://inorganically-electromyographic-dena.ngrok-free.dev/webhook
