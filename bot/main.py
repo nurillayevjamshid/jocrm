@@ -25,6 +25,10 @@ async def main() -> None:
     """Main bot entry point."""
     settings = get_settings()
 
+    if not settings.BOT_TOKEN:
+        logger.error("❌ BOT_TOKEN topilmadi! .env faylingizni tekshiring.")
+        return
+
     bot = Bot(
         token=settings.BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)

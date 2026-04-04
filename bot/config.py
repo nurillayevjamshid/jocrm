@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     )
 
     # Required
-    BOT_TOKEN: str = Field(description="Telegram bot token from @BotFather")
+    BOT_TOKEN: str = Field(default="", description="Telegram bot token from @BotFather")
 
     # Optional
     BOT_MODE: str = Field(default="polling")

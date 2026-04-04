@@ -28,6 +28,7 @@ interface AuthState {
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+console.log('[useAuth] Backend API URL:', API_URL)
 
 export function useAuth() {
   const [authState, setAuthState] = useState<AuthState>({

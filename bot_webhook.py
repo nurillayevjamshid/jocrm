@@ -45,8 +45,14 @@ async def main() -> None:
     logger.info(f"Mini App URL: {settings.MINIAPP_URL}")
     logger.info("Bot webhook mode da ishga tushdi!")
 
-    # Webhook mode - polling emas
-    await dp.start_polling(bot, skip_updates=True)
+    # Webhook mode da polling ishlatilmaydi.
+    # Bu yerda webhook o'rnatilgandan so'ng, bot Telegram dan kelayotgan
+    # so'rovlarni kutishi kerak. Agar sizda webhook server bo'lsa,
+    # u holda bu script faqat webhookni o'rnatish uchun xizmat qiladi.
+    logger.info("Bot webhook rejimida sozlandi. Endi server so'rovlarni qabul qilishga tayyor.")
+    
+    # Webhook o'rnatilgandan keyin bot sessiyasini yopamiz
+    await bot.session.close()
 
 
 if __name__ == "__main__":
